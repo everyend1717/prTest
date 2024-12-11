@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Person {
+    char name[30];
+    int age;
+    char phone[15];
+};
+
+void Input(struct Person* person) {
+    printf("이름을 입력하세요: ");
+    if (fgets(person->name, sizeof(person->name), stdin) == NULL) {
+        printf("입력 오류\n");
+        return;
+    }
+    person->name[strcspn(person->name, "\n")] = 0;
+
+    printf("나이를 입력하세요: ");
+    if (scanf_s("%d", &(person->age)) != 1) {
+        printf("입력 오류\n");
+        return;
+    }
+    while (getchar() != '\n');
+
+    printf("전화번호를 입력하세요: ");
+    if (fgets(person->phone, sizeof(person->phone), stdin) == NULL) {
+        printf("입력 오류\n");
+        return;
+    }
+    person->phone[strcspn(person->phone, "\n")] = 0;
+}
+
+void Output(struct Person person) {
+    printf("이름: %s\n", person.name);
+    printf("나이: %d\n", person.age);
+    printf("전화번호: %s\n", person.phone);
+}
+
+int main(void) {
+    struct Person me;
+    Input(&me);
+    Output(me);
+
+    return 0;
+}
